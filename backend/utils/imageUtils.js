@@ -15,9 +15,10 @@ export const deleteImage = async (imageUrl) => {
     }
   }
 };
-export const uploadImage = async (file, path) => {
+export const uploadImage = async ({file, body}, path, required) => {
+    if(required && !file) throw new BadRequestError('Image is Required')
     try {
-        const fileName = `${v4()}${file.originalname}`
+        const fileName = `${body.fname}${body.lname}${body.username}${v4()}`
         const storageRef = ref(storage, `${path}/${fileName}`)
         const metadata = {
             contentType: file.minetype

@@ -6,7 +6,7 @@ import { comparePassword, hashPassword } from '../utils/passwordUtils.js'
 import { createJWT } from '../utils/tokenUtils.js'
 
 export const register = async (req, res) => {
-    const image = await uploadImage(req.file,'user')
+    const image = await uploadImage(req,'tma_users',true)
     const password = await hashPassword(req.body.password)
     req.body.password = password
     const user = await User.create({...req.body,image})
@@ -20,7 +20,7 @@ export const login = async (req, res) => {
     const validUser = await comparePassword(req.body.password, user.password)
     if(!validUser) throw UnauthenticatedError('Wrong password!')
 
-    const token = createJWT({id:user_id})
+    const token = createJWT({id:user._id})
     const oneDay = 1000 * 60 * 60 * 24
     res.cookie('token',token,{
         httpOnly:true,

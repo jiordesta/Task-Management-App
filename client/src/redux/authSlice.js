@@ -11,7 +11,6 @@ const initialState = {
 }
 
 export const register = createAsyncThunk('/register', async (inputs) => {
-    if(!inputs.image) throw new Error('Image is required!')
     try {
         const formData = new FormData()
         formData.append('fname',inputs.fname)
@@ -21,9 +20,17 @@ export const register = createAsyncThunk('/register', async (inputs) => {
         formData.append('password',inputs.password)
         formData.append('image',inputs.image)
 
-        console.log(inputs)
-        //const response = await axios.post(`${path}/register`,formData)
-        //return response.data
+        const response = await axios.post(`${path}register`,formData)
+        return response.data
+    } catch (error) {
+        throw new Error(error.response.data.message)
+    }
+})
+
+export const login = createAsyncThunk('/login', async (inputs) => {
+    try {
+        const response = await axios.post(`${path}login`,inputs)
+        return response.data
     } catch (error) {
         throw new Error(error.response.data.message)
     }
@@ -41,6 +48,16 @@ const authSlice = createSlice({
         })
         builder.addCase(register.fulfilled, (state, action) => {
             state.loadingRegister = false
+        })
+
+        builder.addCase(login.pending, (state, action) => {
+            state.loadingLogin = true
+        })
+        builder.addCase(login.rejected, (state, action) => {
+            state.loadingLogin = false
+        })
+        builder.addCase(login.fulfilled, (state, action) => {
+            state.loadingLogin = false
         })
     }
 })
