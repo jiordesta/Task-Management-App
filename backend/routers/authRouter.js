@@ -7,7 +7,7 @@ import { authenticateUser } from '../middlewares/authMiddleware.js'
 const router = Router()
 router.route('/register').post(upload.single('image'),validateRegisterInput,register)
 router.route('/login').post(validateLoginInput,login)
-router.route('/logout').patch(logout)
+router.route('/logout').patch(authenticateUser,logout)
 router.route('/fetch').get(authenticateUser,fetchCurrentUser)
 
 export default router

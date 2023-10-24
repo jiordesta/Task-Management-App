@@ -35,7 +35,7 @@ export const logout = async (req, res) => {
         httpOnly:true,
         expires: new Date(Date.now())
     })
-    res.status(StatusCodes.OK).json('logged out successfully!')
+    res.status(StatusCodes.OK).json('Logged out!')
 }
 
 export const fetchCurrentUser = async (req, res) => {

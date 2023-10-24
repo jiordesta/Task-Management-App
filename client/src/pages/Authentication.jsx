@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { register, login } from "../redux/authSlice";
+import { register, login, authenticateUser } from "../redux/authSlice";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import { error, success } from "../redux/notificationSlice";
@@ -15,6 +15,7 @@ export default function Authentication() {
         dispatch(error(response.error.message));
       } else {
         dispatch(success("Successfully Registered an Account!"));
+        setShowRegister(false);
       }
     });
   };
@@ -25,6 +26,7 @@ export default function Authentication() {
         dispatch(error(response.error.message));
       } else {
         dispatch(success("Successfull Login!"));
+        dispatch(authenticateUser());
       }
     });
   };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   HomeOutlined,
   UserOutlined,
@@ -6,10 +6,32 @@ import {
   DollarOutlined,
 } from "@ant-design/icons";
 import { Button, Typography } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authenticateUser, logout } from "../redux/authSlice";
+import { error, success } from "../redux/notificationSlice";
 
 export default function Navigation() {
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(authenticateUser()).then((response) => {
+      if (response.error) {
+        dispatch(error(response.error.message));
+      } else {
+        dispatch(success("Logged in!"));
+      }
+    });
+  }, []);
+
+  const handleLogout = () => {
+    dispatch(logout()).then((response) => {
+      if (response.error) {
+        dispatch(error(response.error.message));
+      } else {
+        dispatch(success("Logged out!"));
+      }
+    });
+  };
 
   const NavComponent = () => {
     return (
@@ -51,7 +73,9 @@ export default function Navigation() {
                 <Button type="text">Account</Button>
               </li>
               <li className="nav-item p-2">
-                <Button type="text">Logout</Button>
+                <Button type="text" onClick={() => handleLogout()}>
+                  Logout
+                </Button>
               </li>
             </ul>
           </div>
