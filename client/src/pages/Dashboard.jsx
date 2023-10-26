@@ -1,18 +1,14 @@
 import { Button, Typography, Empty } from "antd";
-import React, { useState } from "react";
+import React from "react";
 
 export default function Dashboard() {
   const viewportHeight = window.innerHeight;
   const { Paragraph, Title } = Typography;
-  const [filter, setFilter] = useState([
-    { _id: 1 },
-    { _id: 2 },
-    { _id: 3 },
-    { _id: 4 },
-    { _id: 5 },
-  ]);
+  const projects = [];
+  const tasks = [];
+  const users = [];
 
-  const ProjectCard = () => {
+  const ProjectCard = ({ project }) => {
     return (
       <div className="col-md-3">
         <div className="card">
@@ -39,11 +35,51 @@ export default function Dashboard() {
     );
   };
 
-  const ShowData = () => {
+  const TaskCard = ({ task }) => {
+    return (
+      <div className="col-md-3">
+        <div className="card">
+          <div className="card-body"></div>
+        </div>
+      </div>
+    );
+  };
+
+  const UserCard = ({ user }) => {
+    return (
+      <div className="col-md-3">
+        <div className="card">
+          <div className="card-body"></div>
+        </div>
+      </div>
+    );
+  };
+
+  const ShowProjects = () => {
     return (
       <div className="row g-2 mt-1">
-        {filter.map((data) => {
-          return <ProjectCard key={data._id} />;
+        {projects.map((project) => {
+          return <ProjectCard key={data._id} project={project} />;
+        })}
+      </div>
+    );
+  };
+
+  const ShowTasks = () => {
+    return (
+      <div className="row g-2 mt-1">
+        {tasks.map((task) => {
+          return <TaskCard key={data._id} task={task} />;
+        })}
+      </div>
+    );
+  };
+
+  const ShowUsers = () => {
+    return (
+      <div className="row g-2 mt-1">
+        {users.map((user) => {
+          return <UserCard key={data._id} user={user} />;
         })}
       </div>
     );
@@ -65,22 +101,60 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="container">
-      <div className="row text-center mt-3">
-        <div className="col-md-3 mt-1">
-          <Button className="w-100">All Projects</Button>
+    <>
+      <div className="container card mt-3 p-0" id="project-section">
+        <div className="card-header">
+          <div className="row mt-1">
+            <div className="col"></div>
+            <div className="col"></div>
+            <div className="col">
+              <Button className="w-100">view all my projects</Button>
+            </div>
+          </div>
         </div>
-        <div className="col-md-3 mt-1">
-          <Button className="w-100">My Projects</Button>
-        </div>
-        <div className="col-md-3 mt-1">
-          <Button className="w-100">Interacted Projects</Button>
-        </div>
-        <div className="col-md-3 mt-1">
-          <Button className="w-100">Create Project</Button>
+        <div
+          className="card-body"
+          style={{ minHeight: "700px", overflow: "auto" }}
+        >
+          {filter.length > 0 ? <ShowProjects /> : <EmptyData />}
         </div>
       </div>
-      {filter.length > 0 ? <ShowData /> : <EmptyData />}
-    </div>
+
+      <div className="container card mt-3 p-0" id="task-section">
+        <div className="card-header">
+          <div className="row mt-1">
+            <div className="col"></div>
+            <div className="col"></div>
+            <div className="col">
+              <Button className="w-100">view all my task</Button>
+            </div>
+          </div>
+        </div>
+        <div
+          className="card-body"
+          style={{ minHeight: "700px", overflow: "auto" }}
+        >
+          {filter.length > 0 ? null : <EmptyData />}
+        </div>
+      </div>
+
+      <div className="container card mt-3 p-0" id="user-section">
+        <div className="card-header">
+          <div className="row mt-1">
+            <div className="col"></div>
+            <div className="col"></div>
+            <div className="col">
+              <Button className="w-100">view all active users</Button>
+            </div>
+          </div>
+        </div>
+        <div
+          className="card-body"
+          style={{ minHeight: "700px", overflow: "auto" }}
+        >
+          {filter.length > 0 ? null : <EmptyData />}
+        </div>
+      </div>
+    </>
   );
 }
