@@ -1,65 +1,48 @@
-import { Button, Typography, Empty } from "antd";
+import { Button, Empty } from "antd";
 import React from "react";
+import { ProjectCard, TaskCard, UserCard } from "./Cards";
 
 export default function Dashboard() {
   const viewportHeight = window.innerHeight;
-  const { Paragraph, Title } = Typography;
-  const projects = [];
-  const tasks = [];
-  const users = [];
-
-  const ProjectCard = ({ project }) => {
-    return (
-      <div className="col-md-3">
-        <div className="card">
-          <div
-            className="card-body img-container m-0 p-0"
-            style={{ height: "150px" }}
-          >
-            <img src="/1.webp" alt="" />
-          </div>
-          <div className="card-body p-2">
-            <Paragraph mark>Title: Task Management App</Paragraph>
-            <Paragraph mark>Description: This is a description</Paragraph>
-            <Paragraph mark>Owner: John Irson Ordesta</Paragraph>
-            <Paragraph mark>Created: Oct. 9, 2023</Paragraph>
-            <Paragraph mark className="mb-0">
-              Members: 69
-            </Paragraph>
-          </div>
-          <div className="card-footer p-1 m-0">
-            <Button className="w-100">view project</Button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const TaskCard = ({ task }) => {
-    return (
-      <div className="col-md-3">
-        <div className="card">
-          <div className="card-body"></div>
-        </div>
-      </div>
-    );
-  };
-
-  const UserCard = ({ user }) => {
-    return (
-      <div className="col-md-3">
-        <div className="card">
-          <div className="card-body"></div>
-        </div>
-      </div>
-    );
-  };
+  const projects = [
+    { _id: 1 },
+    { _id: 2 },
+    { _id: 3 },
+    { _id: 4 },
+    { _id: 5 },
+    { _id: 6 },
+    { _id: 7 },
+    { _id: 8 },
+    { _id: 9 },
+  ];
+  const tasks = [
+    { _id: 1 },
+    { _id: 2 },
+    { _id: 3 },
+    { _id: 4 },
+    { _id: 5 },
+    { _id: 6 },
+    { _id: 7 },
+    { _id: 8 },
+    { _id: 9 },
+  ];
+  const users = [
+    { _id: 1 },
+    { _id: 2 },
+    { _id: 3 },
+    { _id: 4 },
+    { _id: 5 },
+    { _id: 6 },
+    { _id: 7 },
+    { _id: 8 },
+    { _id: 9 },
+  ];
 
   const ShowProjects = () => {
     return (
       <div className="row g-2 mt-1">
-        {projects.map((project) => {
-          return <ProjectCard key={data._id} project={project} />;
+        {projects.slice(0, 8).map((project) => {
+          return <ProjectCard key={project._id} project={project} />;
         })}
       </div>
     );
@@ -68,8 +51,8 @@ export default function Dashboard() {
   const ShowTasks = () => {
     return (
       <div className="row g-2 mt-1">
-        {tasks.map((task) => {
-          return <TaskCard key={data._id} task={task} />;
+        {tasks.slice(0, 8).map((task) => {
+          return <TaskCard key={task._id} task={task} />;
         })}
       </div>
     );
@@ -78,8 +61,8 @@ export default function Dashboard() {
   const ShowUsers = () => {
     return (
       <div className="row g-2 mt-1">
-        {users.map((user) => {
-          return <UserCard key={data._id} user={user} />;
+        {users.slice(0, 8).map((user) => {
+          return <UserCard key={user._id} user={user} />;
         })}
       </div>
     );
@@ -101,8 +84,8 @@ export default function Dashboard() {
   };
 
   return (
-    <>
-      <div className="container card mt-3 p-0" id="project-section">
+    <div className="py-3">
+      <div className="container card p-0" id="project-section">
         <div className="card-header">
           <div className="row mt-1">
             <div className="col"></div>
@@ -114,9 +97,9 @@ export default function Dashboard() {
         </div>
         <div
           className="card-body"
-          style={{ minHeight: "700px", overflow: "auto" }}
+          style={{ minHeight: "500px", overflow: "auto" }}
         >
-          {filter.length > 0 ? <ShowProjects /> : <EmptyData />}
+          {projects.length > 0 ? <ShowProjects /> : <EmptyData />}
         </div>
       </div>
 
@@ -132,9 +115,9 @@ export default function Dashboard() {
         </div>
         <div
           className="card-body"
-          style={{ minHeight: "700px", overflow: "auto" }}
+          style={{ minHeight: "500px", overflow: "auto" }}
         >
-          {filter.length > 0 ? null : <EmptyData />}
+          {tasks.length > 0 ? <ShowTasks /> : <EmptyData />}
         </div>
       </div>
 
@@ -150,11 +133,11 @@ export default function Dashboard() {
         </div>
         <div
           className="card-body"
-          style={{ minHeight: "700px", overflow: "auto" }}
+          style={{ minHeight: "500px", overflow: "auto" }}
         >
-          {filter.length > 0 ? null : <EmptyData />}
+          {users.length > 0 ? <ShowUsers /> : <EmptyData />}
         </div>
       </div>
-    </>
+    </div>
   );
 }
