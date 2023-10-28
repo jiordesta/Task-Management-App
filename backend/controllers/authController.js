@@ -16,9 +16,9 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     const user = await User.findOne({username: req.body.username})
-    if(!user) throw new BadRequestError('The username provided do not exist in the database')
-    const validUser = await comparePassword(req.body.password, user.password)
-    if(!validUser) throw UnauthenticatedError('Wrong password!')
+    if(!user) throw new BadRequestError('The username provided does not exist!')
+    const validPassword = await comparePassword(req.body.password, user.password)
+    if(!validPassword) throw new UnauthenticatedError('Wrong password!')
 
     const token = createJWT({id:user._id})
     const oneDay = 1000 * 60 * 60 * 24

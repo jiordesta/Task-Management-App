@@ -25,6 +25,7 @@ export const register = createAsyncThunk('/register', async (inputs) => {
         const response = await axios.post(`${path}register`,formData)
         return response.data
     } catch (error) {
+        if(error.response.request.status === 500) throw new Error('SERVER IS OFFLINE!')
         throw new Error(error.response.data.message)
     }
 })
@@ -34,6 +35,7 @@ export const login = createAsyncThunk('/login', async (inputs) => {
         const response = await axios.post(`${path}login`,inputs)
         return response.data
     } catch (error) {
+        if(error.response.request.status === 500) throw new Error('SERVER IS OFFLINE!')
         throw new Error(error.response.data.message)
     }
 })
@@ -43,6 +45,7 @@ export const authenticateUser = createAsyncThunk('/fetch_current_user', async ()
         const response = await axios.get(`${path}fetch`)
         return response.data
     } catch (error) {
+        if(error.response.request.status === 500) throw new Error('SERVER IS OFFLINE!')
         throw new Error(error.response.data.message)
     }
 })
@@ -52,6 +55,7 @@ export const logout = createAsyncThunk('/logout', async () => {
         const response = await axios.patch(`${path}logout`)
         return response.data
     } catch (error) {
+        if(error.response.request.status === 500) throw new Error('SERVER IS OFFLINE!')
         throw new Error(error.response.data.message)
     }
 })
