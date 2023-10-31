@@ -9,9 +9,11 @@ import { Button, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticateUser, logout } from "../redux/authSlice";
 import { error, success } from "../redux/notificationSlice";
+import { setCreateDrawer } from "../redux/projectSlice";
 
 export default function Navigation() {
   const user = useSelector((state) => state.auth.user);
+  const projectDrawer = useSelector((state) => state.project.createDrawer);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(authenticateUser()).then((response) => {
@@ -59,13 +61,18 @@ export default function Navigation() {
           >
             <ul className="navbar-nav w-75 d-flex justify-content-center">
               <li className="nav-item p-2">
-                <Button type="text">Projects</Button>
+                <Button
+                  type="text"
+                  onClick={() => dispatch(setCreateDrawer(true))}
+                >
+                  new project
+                </Button>
               </li>
               <li className="nav-item p-2">
-                <Button type="text">Tasks</Button>
+                <Button type="text">my projects</Button>
               </li>
               <li className="nav-item p-2">
-                <Button type="text">Users</Button>
+                <Button type="text">my tasks</Button>
               </li>
             </ul>
             <ul className="navbar-nav w-25  d-flex justify-content-center">
@@ -84,5 +91,5 @@ export default function Navigation() {
     );
   };
 
-  return <>{user ? <NavComponent /> : null}</>;
+  return <>{user && !projectDrawer ? <NavComponent /> : null}</>;
 }
