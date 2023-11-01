@@ -42,13 +42,16 @@ export default function Dashboard() {
               <div className="col"></div>
               <div className="col"></div>
               <div className="col">
-                <Button className="w-100">view all my projects</Button>
+                <Button className="w-100">view all projects</Button>
               </div>
             </div>
           </div>
           <div
             className="card-body"
-            style={{ minHeight: "500px", overflow: "auto" }}
+            style={{
+              minHeight: `${viewportHeight - viewportHeight / 4}px`,
+              overflow: "auto",
+            }}
           >
             {projects.length > 0 ? <ShowProjects /> : <EmptyData />}
           </div>
