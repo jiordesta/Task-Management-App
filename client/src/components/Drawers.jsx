@@ -1,4 +1,4 @@
-import { Button, Drawer, Input, Typography } from "antd";
+import { Button, DatePicker, Drawer, Empty, Input, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { createProject, setCreateDrawer } from "../redux/projectSlice";
 import TextArea from "antd/es/input/TextArea";
@@ -24,15 +24,7 @@ export const CreateProjectDrawer = () => {
 
   const drawer = useSelector((state) => state.project.createDrawer);
   const dispatch = useDispatch();
-  const { Paragraph, Title } = Typography;
-
-  const getCurrentDate = () => {
-    const timestamp = Date.now();
-    const date = new Date(timestamp);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDateString = date.toLocaleDateString(undefined, options);
-    return formattedDateString;
-  };
+  const { Paragraph } = Typography;
 
   const MemberCard = ({ user }) => {
     const isAdded =
@@ -90,23 +82,37 @@ export const CreateProjectDrawer = () => {
             placeholder="manager.."
             defaultValue="John Irson Ordesta"
           />
-          <Input placeholder="created.." defaultValue={getCurrentDate()} />
+          <DatePicker className="w-100 mb-1" placeholder="Start Date" />
+          <DatePicker className="w-100 mb-1" placeholder="End Date" />
         </div>
-        <div className="card-body p-1">
+        <div className="card-body p-1 card m-1">
           <Paragraph className="mb-1 text-end">Project Members</Paragraph>
           <div
-            className="custom-overflow m-0 p-0"
-            style={{ height: "300px", overflowY: "auto", overflowX: "hidden" }}
+            className="custom-overflow m-0 p-1 card"
+            style={{
+              height: "300px",
+              overflowY: "auto",
+              overflowX: "hidden",
+            }}
           >
-            {members.map((member) => {
-              return <MemberCard key={member.id} user={member} />;
-            })}
+            {members.length > 0 ? (
+              <>
+                {members.map((member) => {
+                  return <MemberCard key={member.id} user={member} />;
+                })}
+              </>
+            ) : (
+              <Empty className="mt-5" description="No members!" />
+            )}
           </div>
+        </div>
+        <div className="card-body p-1">
+          <Button className="w-100">Create Project!</Button>
         </div>
       </div>
       <div className="card mt-4">
         <div className="card-body p-1">
-          <Paragraph className="text-end">Available Users</Paragraph>
+          <Paragraph className="text-end mb-1">Available Users</Paragraph>
           <Search className="mb-1" />
           <>
             {users.map((user) => {
