@@ -1,4 +1,12 @@
-import { Button, DatePicker, Drawer, Empty, Input, Typography } from "antd";
+import {
+  Button,
+  DatePicker,
+  Drawer,
+  Empty,
+  Input,
+  Typography,
+  Upload,
+} from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { createProject, setCreateDrawer } from "../redux/projectSlice";
 import TextArea from "antd/es/input/TextArea";
@@ -6,35 +14,25 @@ import Search from "antd/es/input/Search";
 import { useState } from "react";
 
 export const CreateProjectDrawer = () => {
+  const [image, setImage] = useState(null);
+
   const [members, setMembers] = useState([]);
-  const users = [
-    { id: 0 },
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 12 },
-    { id: 23 },
-  ];
+  const users = useSelector((state) => state.user.users);
 
   const drawer = useSelector((state) => state.project.createDrawer);
   const dispatch = useDispatch();
   const { Paragraph } = Typography;
+  const { Dragger } = Upload;
 
   const MemberCard = ({ user }) => {
     const isAdded =
-      members.find((member) => member.id === user.id) !== undefined;
+      members.find((member) => member._id === user._id) !== undefined;
     return (
       <div className="card mb-1">
         <div className="card-body p-1 m-0">
           <div className="row align-items-center text-center">
             <div className="col">
-              <Paragraph className="mb-1">{user.id}</Paragraph>
+              <Paragraph className="mb-1">{`${user.fname} ${user.lname}`}</Paragraph>
             </div>
             <div className="col-4">
               {isAdded ? (
@@ -42,7 +40,7 @@ export const CreateProjectDrawer = () => {
                   className="w-100"
                   onClick={() => {
                     setMembers(
-                      members.filter((member) => user.id !== member.id)
+                      members.filter((member) => user._id !== member._id)
                     );
                   }}
                 >
@@ -84,6 +82,25 @@ export const CreateProjectDrawer = () => {
           />
           <DatePicker className="w-100 mb-1" placeholder="Start Date" />
           <DatePicker className="w-100 mb-1" placeholder="End Date" />
+          <Dragger
+            customRequest={({ file }) => {
+              if (!file.type.startsWith("image/")) {
+                dispatch(error("Enter a valid Image (.jpeg .jpg .png) "));
+                return;
+              }
+
+              setImage(file);
+            }}
+            showUploadList={false}
+          >
+            <p className="ant-upload-text">
+              {image ? (
+                <>Image is Ready for upload!</>
+              ) : (
+                <>Click or drag image file in this area!</>
+              )}
+            </p>
+          </Dragger>
         </div>
         <div className="card-body p-1 card m-1">
           <Paragraph className="mb-1 text-end">Project Members</Paragraph>
@@ -98,7 +115,7 @@ export const CreateProjectDrawer = () => {
             {members.length > 0 ? (
               <>
                 {members.map((member) => {
-                  return <MemberCard key={member.id} user={member} />;
+                  return <MemberCard key={member._id} user={member} />;
                 })}
               </>
             ) : (
@@ -116,7 +133,7 @@ export const CreateProjectDrawer = () => {
           <Search className="mb-1" />
           <>
             {users.map((user) => {
-              return <MemberCard key={user.id} user={user} />;
+              return <MemberCard key={user._id} user={user} />;
             })}
           </>
         </div>

@@ -10,6 +10,8 @@ import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js'
 
 //routers
 import authRouter from './routers/authRouter.js'
+import userRouter from './routers/userRouter.js'
+import projectRouter from './routers/projectRouter.js'
 
 dotenv.config()
 const app = express()
@@ -22,7 +24,9 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 //routers
-app.use('/tma/auth',authRouter)
+app.use('/tma/auth', authRouter)
+app.use('/tma/user', userRouter)
+app.use('/tma/project', projectRouter)
 
 //middlewares
 app.use(errorHandlerMiddleware)
