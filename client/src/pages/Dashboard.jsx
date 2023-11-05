@@ -11,7 +11,7 @@ export default function Dashboard() {
   const ShowProjects = () => {
     return (
       <div className="row g-2 mt-1">
-        {projects.slice(0, 8).map((project) => {
+        {projects.slice(0, 6).map((project) => {
           return <ProjectCard key={project._id} project={project} />;
         })}
       </div>

@@ -73,7 +73,7 @@ export const CreateProjectDrawer = () => {
 
   return (
     <Drawer
-      title="About this site"
+      title="Create Project"
       placement="right"
       onClose={() => dispatch(setCreateDrawer(false))}
       open={drawer}
@@ -151,7 +151,7 @@ export const CreateProjectDrawer = () => {
           </div>
           <div className="card-body p-1">
             <Button
-              className="w-100"
+              className="w-100 bg-primary text-white"
               onClick={() =>
                 dispatch(
                   createProject({

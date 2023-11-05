@@ -21,6 +21,7 @@ import { store } from "./redux/store";
 import Navigation from "./components/Navigation";
 import Authentication from "./pages/Authentication";
 import Home from "./pages/Home";
+import ProjectPage from "./pages/ProjectPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -30,10 +31,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         reverseOrder={false}
         toastOptions={{ duration: 7500 }}
       />
-      <Navigation />
+
       <Router>
+        <Navigation />
         <Routes>
           <Route path="/" Component={Home} />
+          <Route path="/project/:id" Component={ProjectPage} />
         </Routes>
       </Router>
     </Provider>

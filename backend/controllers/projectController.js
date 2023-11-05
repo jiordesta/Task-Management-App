@@ -24,3 +24,9 @@ export const fetchAllProjects = async (req, res) => {
     if(!projects) throw new BadRequestError('There was an error fetching the projects!')
     res.status(StatusCodes.OK).json({projects})
 }
+export const fetchProject = async (req, res) => {
+    const {id} = req.params
+    const project = await Project.findById(id)
+    if(!project) throw new BadRequestError('There was an error in fetchin the project!')
+    res.status(StatusCodes.OK).json({project})
+}

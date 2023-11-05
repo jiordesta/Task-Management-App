@@ -5,7 +5,9 @@ const initialState = {
     createDrawer : false,
     projects: [],
     loadingProjects: false,
-    loadingCreate:false
+    loadingCreate: false,
+    loadingProject: false,
+    project: null
 }
 
 const path = '/tma/project/'
@@ -38,6 +40,16 @@ export const fetchProjects = createAsyncThunk('/fetch_all_projects', async () =>
     }
 })
 
+export const fetchProject = createAsyncThunk('/fetch_project', async (id) => {
+    try {
+        const response = await axios.get(`${path}fetch/${id}`)
+        return response.data
+    } catch (error) {
+        if(error.response.request.status === 500) throw new Error('SERVER IS OFFLINE!')
+        throw new Error(error.response.data.message)   
+    }
+}) 
+
 export const projectSlice = createSlice({
     name:'project',
     initialState,
@@ -68,6 +80,18 @@ export const projectSlice = createSlice({
         builder.addCase(fetchProjects.fulfilled, (state, action) => {
             state.loadingProjects = false
             state.projects = action.payload.projects
+        })
+
+        builder.addCase(fetchProject.pending, (state, action) => {
+            state.loadingProject = true
+        })
+        builder.addCase(fetchProject.rejected, (state, action) => {
+            state.loadingProject = false
+        })
+        builder.addCase(fetchProject.fulfilled, (state, action) => {
+            state.loadingProject = false
+            console.log(action.payload.project)
+            state.project = action.payload.project
         })
     }
 })

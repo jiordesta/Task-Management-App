@@ -10,9 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { authenticateUser, logout } from "../redux/authSlice";
 import { error, success } from "../redux/notificationSlice";
 import { setCreateDrawer } from "../redux/projectSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Navigation() {
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   const projectDrawer = useSelector((state) => state.project.createDrawer);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,7 +43,9 @@ export default function Navigation() {
         <div className="container-fluid p-0">
           <ul className="navbar-nav w-25">
             <li className="nav-item p-2">
-              <Button type="text">Home</Button>
+              <Button type="text" onClick={() => navigate("/")}>
+                Home
+              </Button>
             </li>
           </ul>
           <button
