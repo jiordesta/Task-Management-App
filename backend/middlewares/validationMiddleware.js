@@ -29,6 +29,15 @@ export const validateRegisterInput = withValidationErrors(
     ]
 )
 
+export const validateCreateProjectInput = withValidationErrors(
+    [
+        body('title').notEmpty().withMessage('Title is Required!'),
+        body('description').notEmpty().withMessage('Description is Required!'),
+        body('start').notEmpty().withMessage('Start Date is Required!'),
+        body('end').notEmpty().withMessage('End Date is Required!'),
+    ]
+)
+
 export const validateIdParam = withValidationErrors(
     [
         param('id').custom( async (value) => {

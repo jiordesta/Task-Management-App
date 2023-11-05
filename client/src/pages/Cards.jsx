@@ -1,24 +1,29 @@
 import { Typography, Button } from "antd";
+import { useSelector } from "react-redux";
 
 export const ProjectCard = ({ project }) => {
   const { Paragraph } = Typography;
+  const owner = useSelector((state) => state.user.users).find(
+    (user) => user._id === project.owner
+  );
   return (
-    <div className="col-md-3">
+    <div className="col-md-4">
       <div className="card">
         <div
           className="card-body img-container m-0 p-0"
-          style={{ height: "150px" }}
+          style={{ height: "250px" }}
         >
-          <img src="/1.webp" alt="" />
+          <img src={project.image} alt="" />
         </div>
         <div
           className="card-body p-2 custom-overflow"
-          style={{ height: "150px", overflowY: "auto" }}
+          style={{ height: "200px", overflowY: "auto" }}
         >
-          <Paragraph mark>Title: Facebook App</Paragraph>
-          <Paragraph>Manager: John Irson Ordesta</Paragraph>
-          <Paragraph>Created: Oct. 9, 2023</Paragraph>
-          <Paragraph className="mb-0">Members: 69</Paragraph>
+          <Paragraph mark>{`Title: ${project.title}`}</Paragraph>
+          <Paragraph className="mb-0">{`Manager: ${owner.fname} ${owner.lname}`}</Paragraph>
+          <Paragraph className="mb-0">{`Start: ${project.start}`}</Paragraph>
+          <Paragraph className="mb-0">{`End: ${project.end}`}</Paragraph>
+          <Paragraph className="mb-0">{`Members: ${project.members.length}`}</Paragraph>
           <Paragraph>Description: This is a description</Paragraph>
         </div>
         <div className="card-footer p-1 m-0">
