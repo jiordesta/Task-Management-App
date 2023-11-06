@@ -51,18 +51,18 @@ export const TaskCard = ({ task }) => {
       <div className="card">
         <div
           className="card-body img-container m-0 p-0"
-          style={{ height: "150px" }}
+          style={{ height: "100px" }}
         >
           <img src="/task.webp" alt="" />
         </div>
         <div
           className="card-body p-2 custom-overflow"
-          style={{ height: "150px", overflowY: "auto" }}
+          style={{ height: "200px", overflowY: "auto" }}
         >
-          <Paragraph mark>Title: Add Home page to the landing page!</Paragraph>
-          <Paragraph>Project: Facebook App</Paragraph>
-          <Paragraph>Assigned: Sheena Coquilla</Paragraph>
-          <Paragraph>
+          <Paragraph mark>{`Title: Add homepage!`}</Paragraph>
+          <Paragraph className="mb-1">{`Members: Sheena Coquilla, Irson Ordesta, Dave Smith, Karl Jones`}</Paragraph>
+          <Paragraph className="mb-1">{`Deadline: 11-12-23`}</Paragraph>
+          <Paragraph className="mb-1">
             Description: This is a task descriprion. This is a Task
             Description!This is a task descriprion. This is a Task Description!
           </Paragraph>

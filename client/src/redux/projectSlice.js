@@ -90,7 +90,6 @@ export const projectSlice = createSlice({
         })
         builder.addCase(fetchProject.fulfilled, (state, action) => {
             state.loadingProject = false
-            console.log(action.payload.project)
             state.project = action.payload.project
         })
     }
